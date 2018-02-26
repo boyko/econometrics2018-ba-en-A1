@@ -4,37 +4,27 @@
 
 # Problem 1
 
-# 1)
+# a)
 x <- 8 + 31
 
-#2) 
+# b) 
 y <- 2 ^ 8
 
-#3) 
+# c) 
 x / y
 
-#4) names are case sensitive
+# d) names are case sensitive (see error message)
 X + y
 
-#5)
-
+# e)
 x_char <- 'six'
 
-#5)
-
+# f)
 x_char + y
 
-#6)
-
+# g)
 x_true <- TRUE
 x_false <- FALSE
 
-#7) coersion of class logical to numeric
+# h) coersion of class logical to numeric
 x_true + x_false
-
-#8)
-
-class(x)
-class(y)
-class(x_char)
-class(x_true)
