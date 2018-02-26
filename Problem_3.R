@@ -1,62 +1,62 @@
-# Assignment 1 Problem 3
+###########################
+# Assignment 1, Problem 2 #
+###########################
 
-# 1)
+winnings <- c(50, 80, 32.4, 21, 70)
+losses <- c(30, 90, 12, 21, 60)
+dayNames <- c('Mon', 'Tue', 'Wed', 'Thu', 'Fri')
 
-# Install packages. Uncomment the next line and run it if dplyr and ggplot2 are not installed in your R instance.
-# install.packages(c('dplyr', 'ggplot2'))
+# a)
+totalWinnings <- sum(winnings)
+totalLosses <- sum(losses)
 
-# Load the packages
-# You need to install packages only once, but in order to use them
-# you need to load them every time you start a new R session.
-library(dplyr)
-library(ggplot2)
+# b)
+avgWinnings <- totalWinnings/length(winnings)
+avgLosses <- mean(losses)
 
-# 2)
+# c)
+profit <- winnings - losses
+summary(profit)
 
-wines <- read.csv(file='https://s3.eu-central-1.amazonaws.com/sf-timeseries/data/wine.csv')
-str(wines)
-wines
+# d)
+names(winnings) <- dayNames
+winnings
+names(losses) <- dayNames
+losses
 
-# 3)
-wines <- within(wines, {
-  Price <- exp(LogPrice)
-})
+# e)
+dayNames[profit > 0]
 
-# 4)
+# f)
+avgLossBeginning <- mean(losses[c('Mon', 'Tue')])
+avgLossEnd <- mean(losses[c('Thu', 'Fri')])
 
-wines <- within(wines, {
-  TemperatureClass <- ifelse(Temperature > mean(Temperature), 'hot', 'cold')
-})
+avgLossBeginning > avgLossEnd
 
-# 5)
+# g)
 
-table(wines$TemperatureClass)
+# This code relies on the order of the vector. Alternatively, you can use
+# The day names as in 6).
+sum(profit[1:2]) > sum(profit[4:5])
 
-# 6)
-
-winesByTempClass <- group_by(wines, TemperatureClass)
-
-summarise(winesByTempClass,
-          mean = mean(Price),
-          sd = sd(Price),
-          min = min(Price),
-          max = max(Price),
-          median = median(Price)
+# h)
+pokerData <- data.frame(
+  dayNames = dayNames,
+  winnins = winnings, 
+  losses = losses,
+  profit = profit
 )
-# 7) Boxplot, for a very readable guide on using ggplot2 see
-## http://r4ds.had.co.nz/data-visualisation.html#introduction-1
+pokerData
 
-ggplot(data = wines, aes(x = TemperatureClass, y = Price)) + geom_boxplot()
+# i)
 
-# 8)
+exchangeRate <- c(1.683, 1.679, 1.684, 1.678, 1.655)
+pokerData <- within(pokerData, {
+  profitBGN <- profit * exchangeRate
+})
+pokerData
 
-fit <- lm(Price ~ TemperatureClass, data = wines)
-summary(fit)
 
-# 9)
+# k)
+write.csv(pokerData, file='gambling.csv')
 
-ggplot(data = wines, aes(x = Temperature, y = Price)) + geom_point()
-
-# 10) (Pearson) Correlation coefficient
-
-cor(wines$Price, wines$Temperature)

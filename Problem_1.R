@@ -13,13 +13,13 @@ y <- 2 ^ 8
 # c) 
 x / y
 
-# d) names are case sensitive (see error message)
+# d) names are _case sensitive_ (see error message)
 X + y
 
 # e)
 x_char <- 'six'
 
-# f)
+# f) Invalid operation
 x_char + y
 
 # g)
